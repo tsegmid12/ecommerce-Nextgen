@@ -1,10 +1,19 @@
-import { useState } from "react";
-import products from "../data/product";
+import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import axios from "axios";
 
 const ProductList = ({ defaultCategory = "all", showFilter = true }) => {
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState(defaultCategory);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/products").then((response) => {
+      setProducts(response.data);
+    }).catch((error) => {
+      console.error("Error fetching products:", error);
+    });
+  }, []);
 
   let sortedProducts = [...products];
 
@@ -18,7 +27,7 @@ const ProductList = ({ defaultCategory = "all", showFilter = true }) => {
 
   if (category !== "all") {
     sortedProducts = sortedProducts.filter(
-      (product) => product.categore === category
+      (product) => product.category === category
     );
   }
 
@@ -45,15 +54,29 @@ const ProductList = ({ defaultCategory = "all", showFilter = true }) => {
             <option value="mouse">Mouse</option>
             <option value="keyboard">Keyboard</option>
             <option value="mousepad">Mousepad</option>
+            <option value="headset">Headset</option>
           </select>
         </div>
       )}
 
-      <div className="grid gap-4 gap-x-0 grid-cols-4 justify-items-center mt-10">
-        {sortedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <div className="
+  grid
+  grid-cols-1
+  sm:grid-cols-2
+  lg:grid-cols-3
+  xl:grid-cols-4
+  gap-6
+  px-4 sm:px-6 lg:px-10
+  mt-8
+  justify-items-center
+">
+  {sortedProducts.map((product) => (
+    <ProductCard
+      key={product._id}
+      product={product}
+    />
+  ))}
+</div>
     </div>
   );
 };

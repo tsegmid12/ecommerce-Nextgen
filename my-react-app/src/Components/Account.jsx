@@ -3,9 +3,19 @@ import userIcon from '../assets/user.png'
 import {useState} from 'react'
 import data from '../data/account'
 import Acc_comp from './acc_comp.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const Account = () => {
   const [active, setActive] = useState(0)
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('address');
+    navigate('/home');
+  }
 
   return (
     <div className="flex justify-center min-h-screen bg-[#f7f7f7] pt-40">
@@ -23,7 +33,7 @@ const Account = () => {
         <li onClick={() => setActive(0)} className={`text-xl  ml-10 mt-10 cursor-pointer ${active === 0 ? 'font-bold ' : ''}`}>Хувийн мэдэээлэл</li>
         <li onClick={() => setActive(1)} className={`text-xl ml-10 mt-10  cursor-pointer ${active === 1 ? 'font-bold' : ''}`}>Хадгалсан бараа</li>
         <li onClick={() => setActive(2)} className={`text-xl  ml-10 mt-10 cursor-pointer ${active === 2 ? 'font-bold' : ''}`}>Миний захиалга</li>
-        <li onClick={() => setActive(3)} className={`text-xl  ml-10 mt-10 cursor-pointer ${active === 3 ? 'font-bold' : ''}`}>Гарах</li>
+        <li onClick={() => handleLogout()} className={`text-xl  ml-10 mt-10 cursor-pointer ${active === 3 ? 'font-bold' : ''}`}>Гарах</li>
       </ul>
       <Acc_comp active={active} data={data[0]}/>
     

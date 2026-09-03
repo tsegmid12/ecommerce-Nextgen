@@ -8,16 +8,18 @@ import CartCards from './CartCards'
 const Cart = () => {
   const navigate = useNavigate();
 
+  //zasna
   const totalPrice = products.reduce((total, product) => {
     if (product.cart) {
-      return total + product.price * product.count;
+      return total + product.price * product.cart;
     }
     return total;
-  }, 0);
-  const totalCount = products.reduce((total, product) => total + (product.cart ? product.count : 0), 0);
+  }, 0);  
+//zasna
+  const totalCount = products.reduce((total, product) => total + (product.cart ? product.cart : 0), 0);  
   const deliveryCost = 0;
   return (
-    <div className=" flex pt-40 bg-[#f7f7f7]">
+    <div className=" flex pt-40 bg-[#f7f7f7] pb-20">
       <CartList />
       <div className='flex flex-col gap-4 bg-white mt-10 ml-50 h-100 w-100 border rounded-xl'>
         <div className='flex justify-between mx-10 mt-14'>

@@ -1,5 +1,30 @@
 {
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4",
     "react-router-dom": "^7.18.2"
+  },
+  "name": "nextgen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsegmid12/ecommerce-Nextgen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tsegmid12/ecommerce-Nextgen/issues"
+  },
+  "homepage": "https://github.com/tsegmid12/ecommerce-Nextgen#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

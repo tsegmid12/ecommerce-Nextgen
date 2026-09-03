@@ -4,6 +4,7 @@ import Categore from './Categore.jsx'
 import TopSeller from '../Components/TopSeller.jsx'
 import ProductList from '../Components/ProductList.jsx'
 const Home = () => {
+
   return (
     <div className="min-h-screen bg-[#f7f7f7] pb-30">
        {/* Banner */}

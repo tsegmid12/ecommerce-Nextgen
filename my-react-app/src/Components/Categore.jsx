@@ -8,74 +8,46 @@ import { Link } from 'react-router-dom'
 
 const Categore = () => {
   return (
-    <div>
-        <ul className="flex justify-center gap-10 mt-20">
-            <Link to="/shop/accessories">
-            <li className="justify-items-center gap-2 border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white">
-            <img
-                src={accessiors}
-                alt="accessiors"
-                className="h-28 w-38 mt-3 mb-3"
-            />
-            <span className="flex justify-center text-lg font-medium">
-                Accessiors
-            </span>
-            </li>
-            </Link>
+   <div className="w-full px-4 mt-20">
+  <ul className="flex justify-center items-center gap-4 md:gap-6 lg:gap-10 overflow-x-auto py-2">
 
-            <Link to="/shop/keyboard">
-            <li className="justify-items-center border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white">
-            <img
-                src={keyboard}
-                alt="keyboard"
-                className="h-28 w-28 mt-3 mb-3"
-            />
-            <span className="flex justify-center text-lg font-medium">
-                Keyboard
-            </span>
-            </li>
-            </Link>
+    <Link to="/shop/accessories" className="shrink-0">
+      <li className="flex flex-col items-center justify-center border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white hover:shadow-lg hover:-translate-y-1 transition duration-200">
+        <img src={accessiors} alt="accessories" className="h-28 w-38 object-contain mb-2" />
+        <span className="text-lg font-medium">Accessories</span>
+      </li>
+    </Link>
 
-            <Link to="/shop/mouse">
-            <li className="justify-items-center gap-2 border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white">
-            <img
-                src={mouse}
-                alt="mouse"
-                className="h-28 w-28 mt-3 mb-3"
-            />
-            <span className="flex justify-center text-lg font-medium">
-                Mouse
-            </span>
-            </li>
-            </Link>
-            
-            <Link to="/shop/headset">
-            <li className="justify-items-center gap-2 border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white">
-            <img
-                src={headset}
-                alt="headset"
-                className="h-28 w-28 mt-3 mb-3"
-            />
-            <span className="flex justify-center text-lg font-medium">
-                Headset
-            </span>
-            </li>
-            </Link>
-    
-            <Link to="/shop/mousepad">
-            <li className="justify-items-center   gap-2 border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white">
-            <img
-                src={mousepad}
-                alt="mousepad"
-                className="h-40 w-40 -mt-3 -mb-5"
-            />
-            <span className="flex justify-center text-lg font-medium">
-                Mousepad
-            </span>
-            </li>
-            </Link>
-        </ul>
-    </div>
+    <Link to="/shop/keyboard" className="shrink-0">
+      <li className="flex flex-col items-center justify-center border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white hover:shadow-lg hover:-translate-y-1 transition duration-200">
+        <img src={keyboard} alt="keyboard" className="h-28 w-28 object-contain mb-2" />
+        <span className="text-lg font-medium">Keyboard</span>
+      </li>
+    </Link>
+
+    <Link to="/shop/mouse" className="shrink-0">
+      <li className="flex flex-col items-center justify-center border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white hover:shadow-lg hover:-translate-y-1 transition duration-200">
+        <img src={mouse} alt="mouse" className="h-28 w-28 object-contain mb-2" />
+        <span className="text-lg font-medium">Mouse</span>
+      </li>
+    </Link>
+
+    <Link to="/shop/headset" className="shrink-0">
+      <li className="flex flex-col items-center justify-center border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white hover:shadow-lg hover:-translate-y-1 transition duration-200">
+        <img src={headset} alt="headset" className="h-28 w-28 object-contain mb-2" />
+        <span className="text-lg font-medium">Headset</span>
+      </li>
+    </Link>
+
+    <Link to="/shop/mousepad" className="shrink-0">
+      <li className="flex flex-col items-center justify-center border-2 border-gray-300 rounded-[15px] h-46 w-46 bg-white hover:shadow-lg hover:-translate-y-1 transition duration-200">
+        <img src={mousepad} alt="mousepad" className="h-32 w-32 object-contain mb-2" />
+        <span className="text-lg font-medium">Mousepad</span>
+      </li>
+    </Link>
+
+  </ul>
+</div>
   )
 }
 
