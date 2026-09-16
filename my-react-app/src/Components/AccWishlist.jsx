@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.API_URL;
+
+
 const AccWishlist = ({ active }) => {
   const navigate = useNavigate();
 
@@ -19,7 +22,7 @@ const AccWishlist = ({ active }) => {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/wishlist",
+          `${API_URL}/api/wishlist`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

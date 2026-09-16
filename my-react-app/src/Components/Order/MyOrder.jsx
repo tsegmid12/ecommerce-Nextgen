@@ -4,6 +4,9 @@ import Shipping from "./Shipping.jsx";
 import Delivered from "./Delivered.jsx";
 import Cancelled from "./Cancelled.jsx";
 
+const API_URL = import.meta.env.API_URL;
+
+
 const MyOrder = ({ active }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [orders, setOrders] = useState([]);
@@ -20,7 +23,7 @@ const MyOrder = ({ active }) => {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/orders",
+          `${API_URL}/api/orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

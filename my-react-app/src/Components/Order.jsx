@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.API_URL;
+
 const Order = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const Order = () => {
       return;
     }
 
-    await axios.post("http://localhost:5000/api/order",{
+    await axios.post(`${API_URL}/api/order`,{
       userId: userId,
       products,
       description: description,

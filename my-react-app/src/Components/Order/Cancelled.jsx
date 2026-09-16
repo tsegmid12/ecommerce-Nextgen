@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+const API_URL = import.meta.env.API_URL;
+
 import axios from "axios";
 
 const Cancelled = ({ activeTab }) => {
@@ -17,7 +20,7 @@ const Cancelled = ({ activeTab }) => {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/orders",
+          `${API_URL}/api/orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

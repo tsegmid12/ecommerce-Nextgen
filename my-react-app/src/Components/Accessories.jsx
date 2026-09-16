@@ -2,7 +2,6 @@ import React from "react";
 import ProductList from "./ProductList.jsx";
 import Categore from "./Categore.jsx";
 
-
 const Accessories = () => {
   return (
     <div className="min-h-screen bg-[#f7f7f7] pt-28 pb-20 sm:pt-32">

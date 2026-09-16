@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.API_URL;
 
 const AccComp = ({ active }) => {
   const userName = localStorage.getItem("username");
@@ -15,7 +16,7 @@ const AccComp = ({ active }) => {
   const [newEmail, setEmail] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/userinfo", {
+    axios.get(`${API_URL}/api/userinfo`, {
       headers:{
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
@@ -35,7 +36,7 @@ const handleSaveEmail = async () => {
         alert("Та эхлээд нэвтэрнэ үү");
         return;
       }
-      await axios.post(`http://localhost:5000/api/userinfo`, { email: newEmail }, {
+      await axios.post(`${API_URL}/api/userinfo`, { email: newEmail }, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -57,7 +58,7 @@ const handleSaveEmail = async () => {
         return;
       } 
 
-      await axios.post(`http://localhost:5000/api/userinfo`, { phone: newphone }, {
+      await axios.post(`${API_URL}/api/userinfo`, { phone: newphone }, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -76,7 +77,7 @@ const handleSaveEmail = async () => {
         alert("Та эхлээд нэвтэрнэ үү");
         return;
       }
-      await axios.post(`http://localhost:5000/api/userinfo`, {
+      await axios.post(`${API_URL}/api/userinfo`, {
          address: newaddress
         }, {
         headers: {

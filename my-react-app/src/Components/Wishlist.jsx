@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../Components/ProductCard";
 
+const API_URL = import.meta.env.API_URL;
+
 const Wishlist = () => {
   const [wishlistProducts, setWishlistProducts] = useState([]);
 
@@ -16,7 +18,7 @@ const Wishlist = () => {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/wishlist",
+          `${API_URL}/api/wishlist`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

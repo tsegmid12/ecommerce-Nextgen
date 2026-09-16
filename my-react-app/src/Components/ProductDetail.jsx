@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import heart from "../assets/heart.png";
 import heart_full from "../assets/heart-full.png";
 
+const API_URL = import.meta.env.API_URL;
+
+
 const ProductDetail = () => {
   const { id } = useParams();
 
@@ -21,7 +24,7 @@ const ProductDetail = () => {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/product/${id}`
+          `${API_URL}/api/product/${id}`
         );
 
         setProduct(response.data);
@@ -49,7 +52,7 @@ const ProductDetail = () => {
         if (!token || !product?._id) return;
 
         const response = await axios.get(
-          "http://localhost:5000/api/wishlist",
+          `${API_URL}/api/wishlist`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

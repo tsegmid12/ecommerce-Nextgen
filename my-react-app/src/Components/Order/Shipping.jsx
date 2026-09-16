@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.API_URL;
+
+
 const Shipping = ({ activeTab }) => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
@@ -17,7 +20,7 @@ const Shipping = ({ activeTab }) => {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/orders",
+          `${API_URL}/api/orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
