@@ -2,35 +2,53 @@ import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import axios from "axios";
 
+const API_URL = "http://localhost:5000";
+
 const ProductList = ({ defaultCategory = "all", showFilter = true }) => {
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState(defaultCategory);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/products")
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/products`);
+
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          setProducts([]);
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching products:",
+          error.response?.data || error.message
+        );
+        setProducts([]);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   let sortedProducts = [...products];
 
   if (sort === "low") {
-    sortedProducts.sort((a, b) => a.price - b.price);
+    sortedProducts.sort(
+      (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0)
+    );
   }
 
   if (sort === "high") {
-    sortedProducts.sort((a, b) => b.price - a.price);
+    sortedProducts.sort(
+      (a, b) => (Number(b.price) || 0) - (Number(a.price) || 0)
+    );
   }
 
   if (category !== "all") {
     sortedProducts = sortedProducts.filter(
-      (product) => product.category === category
+      (product) =>
+        product.category?.toLowerCase() === category.toLowerCase()
     );
   }
 
@@ -96,13 +114,19 @@ const ProductList = ({ defaultCategory = "all", showFilter = true }) => {
       </div>
 
       {/* PRODUCTS */}
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8 xl:grid-cols-4 justify-items-center">
-        {sortedProducts.map((product) => (
-          <ProductCard
-            key={product._id}
-            product={product}
-          />
-        ))}
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 justify-items-center gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8 xl:grid-cols-4">
+        {sortedProducts.length > 0 ? (
+          sortedProducts.map((product) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+            />
+          ))
+        ) : (
+          <p className="col-span-full py-10 text-center text-gray-500">
+            Бүтээгдэхүүн олдсонгүй
+          </p>
+        )}
       </div>
 
     </div>

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import UserNavbar from './Components/Navbar/Navbar'
+import Navbar from './Components/Navbar/Navbar'
 import Home from './Components/Home'
 import Shop from './Components/Shop'
 import Account from './Components/Account'
@@ -55,7 +55,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <UserNavbar/>
+      <Navbar/>
       
         <Routes >
           
