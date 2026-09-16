@@ -49,7 +49,6 @@ const ProductCard = ({ product, onRemove }) => {
         );
       }
     };
-
     checkWishlist();
   }, [product._id]);
 
