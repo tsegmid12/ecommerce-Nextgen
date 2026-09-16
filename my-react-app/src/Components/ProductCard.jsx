@@ -70,6 +70,11 @@ const ProductCard = ({ product, onRemove }) => {
         alert("Энэ бүтээгдэхүүн дууссан байна");
         return;
       }
+
+      if (count >= product.count) {
+        alert(`Үлдэгдэл хүрэлцэхгүй байна. Одоогийн үлдэгдэл: ${product.count}`);
+        return;
+      }
         await axios.post(`${API_URL}/api/cart`,
         {
           userId: localStorage.getItem("userId"),

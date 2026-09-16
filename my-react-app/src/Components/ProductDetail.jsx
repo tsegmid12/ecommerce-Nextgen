@@ -101,7 +101,7 @@ const ProductDetail = () => {
       }
 
       await axios.post(
-        "http://localhost:5000/api/cart",
+        `${API_URL}/api/cart`,
         {
           userId: localStorage.getItem("userId"),
           productId: product._id,
@@ -151,7 +151,7 @@ const ProductDetail = () => {
 
       if (wishlist) {
         await axios.delete(
-          "http://localhost:5000/api/wishlist",
+          `${API_URL}/api/wishlist`,
           {
             data: {
               productId: product._id,
@@ -165,7 +165,7 @@ const ProductDetail = () => {
         setWishlist(false);
       } else {
         await axios.post(
-          "http://localhost:5000/api/wishlist",
+          `${API_URL}/api/wishlist`,
           {
             productId: product._id,
           },
