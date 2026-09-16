@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AdminProducts = () => {
     const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -20,7 +22,7 @@ const AdminProducts = () => {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/products",
+          `${API_URL}/api/products`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,7 +66,7 @@ const AdminProducts = () => {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `http://localhost:5000/api/products/${id}`,
+        `${API_URL}/api/products/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

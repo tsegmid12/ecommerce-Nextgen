@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Admin = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -14,7 +17,7 @@ const Admin = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    axios.get('http://localhost:5000/api/admin', {
+    axios.get(`${API_URL}/api/admin`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

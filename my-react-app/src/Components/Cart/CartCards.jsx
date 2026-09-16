@@ -4,6 +4,9 @@ import heart_full from '../../assets/heart-full.png'
 import { useState } from 'react'
 import axios from 'axios'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const CartCards = ({ product, quantity, onDelete, updateQuantity }) => {
 
   const [count, setCount] = useState(quantity || 1)
@@ -21,7 +24,7 @@ const CartCards = ({ product, quantity, onDelete, updateQuantity }) => {
       }
 
       await axios.delete(
-        "http://localhost:5000/api/cart",
+        `${API_URL}/api/cart`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +52,7 @@ const CartCards = ({ product, quantity, onDelete, updateQuantity }) => {
       }
 
       await axios.put(
-        "http://localhost:5000/api/cart",
+        `${API_URL}/api/cart`,
         {
           productId: product._id,
           quantity: newQuantity,

@@ -3,6 +3,9 @@ import axios from 'axios'
 import CartCards from './CartCards'
 import { useNavigate } from 'react-router-dom'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const CartList = () => {
 
   const [products, setProducts] = useState([])
@@ -26,7 +29,7 @@ const CartList = () => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/cart', {
+    axios.get(`${API_URL}/api/cart`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

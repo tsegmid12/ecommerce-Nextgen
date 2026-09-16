@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import heart from "../assets/heart.png";
 import heart_full from "../assets/heart-full.png";
 
-const API_URL = import.meta.env.API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 const ProductDetail = () => {

@@ -4,6 +4,9 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from "jwt-decode";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -16,7 +19,7 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:5000/api/register', {
+        axios.post(`${API_URL}/api/register`, {
              email,
             username,
             password,

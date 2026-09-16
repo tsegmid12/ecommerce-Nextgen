@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ const EditProduct = () => {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:5000/api/product/${id}`,
+          `${API_URL}/api/product/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -81,7 +84,7 @@ const EditProduct = () => {
       console.log("Sending update:", updateData);
 
       const response = await axios.put(
-        `http://localhost:5000/api/product/${id}`,
+        `${API_URL}/api/product/${id}`,
         updateData,
         {
           headers: {

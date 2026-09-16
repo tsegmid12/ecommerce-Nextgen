@@ -3,6 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Cart = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -18,7 +21,7 @@ const Cart = () => {
 useEffect(() => {
   const fetchCartProducts = async () => {
     try{
-        const response = await axios.get('http://localhost:5000/api/cart', {
+        const response = await axios.get(`${API_URL}/api/cart`, {
         headers:{
           "Authorization" : `Bearer ${localStorage.getItem('token')}`
         }
@@ -54,7 +57,7 @@ const handleUpdate = (e) => {
     alert("Хэрэглэгчийн мэдээллийг бөглөнө үү");
     return;
   }
-  axios.put(`http://localhost:5000/api/user/update/${id}`, {
+  axios.put(`${API_URL}/api/user/update/${id}`, {
     username: userName,
     email: userEmail,
     address: userAddress,

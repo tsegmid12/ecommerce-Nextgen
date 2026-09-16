@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const OrderDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ const OrderDetail = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/admin/orders/${id}`,
+        `${API_URL}/api/admin/orders/${id}`,
         {
           paymentStatus,
           orderStatus,

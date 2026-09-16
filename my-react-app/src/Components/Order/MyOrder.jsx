@@ -4,7 +4,7 @@ import Shipping from "./Shipping.jsx";
 import Delivered from "./Delivered.jsx";
 import Cancelled from "./Cancelled.jsx";
 
-const API_URL = import.meta.env.API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 const MyOrder = ({ active }) => {

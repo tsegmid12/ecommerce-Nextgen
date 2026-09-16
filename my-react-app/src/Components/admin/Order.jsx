@@ -2,6 +2,9 @@ import React from 'react'
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Order = () => {
     const [orders, setOrders] = useState([]);
 useEffect(() => {
@@ -13,7 +16,7 @@ useEffect(() => {
                 return;
             }
 
-            const response = await axios.get("http://localhost:5000/api/admin/orders", {
+            const response = await axios.get(`${API_URL}/api/admin/orders`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

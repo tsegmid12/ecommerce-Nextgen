@@ -3,6 +3,9 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const AddProduct = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -16,7 +19,7 @@ const AddProduct = () => {
   const [sold, setSold] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products')
+    axios.get(`${API_URL}/api/products`)
       .then(response => {
         setProducts(response.data);
       })
@@ -27,7 +30,7 @@ const AddProduct = () => {
 
   const handleAdd = (e) =>{
     e.preventDefault();
-    axios.post('http://localhost:5000/api/products', {
+    axios.post(`${API_URL}/api/products`, {
       name: name,
       description: description,
       price: price,
