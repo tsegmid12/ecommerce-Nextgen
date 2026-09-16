@@ -58,7 +58,7 @@ const Navbar = () => {
         },
       });
 
-      const cartProducts = response.data?.cart?.products || [];
+      const cartProducts = response.data?.products || [];
 
       const quantity = Array.isArray(cartProducts)
         ? cartProducts.reduce(
