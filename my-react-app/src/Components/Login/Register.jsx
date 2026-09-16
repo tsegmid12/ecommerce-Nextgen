@@ -2,28 +2,38 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from "jwt-decode";
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);  
 
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("BUTTON WORKING");
 
         axios.post('http://localhost:5000/api/register', {
-            email: email,
-            username: username,
-            password: password
+             email,
+            username,
+            password,
+            role: 'user'
         }).then((response) => {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('username', jwtDecode(response.data.token).username);
+            localStorage.setItem('email', jwtDecode(response.data.token).email);
+            localStorage.setItem('role', jwtDecode(response.data.token).role);
             navigate('/home');
+            window.location.reload();
         }).catch((error) => {
-            console.error(error);
+            console.error("Register error:", error.response?.data || error.message);
+            alert(error.response?.data?.message || "Бүртгүүлэхэд алдаа гарлаа");
         });
-    };
+    }
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f7f7f7] px-4">
   <form
@@ -82,29 +92,50 @@ const Register = () => {
     </div>
 
     {/* Password */}
-    <div className="flex flex-col gap-2">
-      <label className="text-sm font-semibold text-gray-700">
-        Password
-      </label>
-
+    <div className="relative">
       <input
-        type="password"
+        type={showPassword ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Нууц үг"
-        required
-        className="w-full border border-gray-300 rounded-xl
-                   px-4 py-3 outline-none transition
-                   focus:border-blue-500
-                   focus:ring-2 focus:ring-blue-200"
+        className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 outline-none transition
+                  focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
       />
+
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+      >
+        {showPassword ? "🙈" : "👁️"}
+      </button>
+    </div>
+
+    <div className="relative">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={checkPassword}
+        onChange={(e) => setCheckPassword(e.target.value)}
+        placeholder="Нууц үг"
+        className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 outline-none transition
+                  focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+      />
+
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+      >
+        {showPassword ? "🙈" : "👁️"}
+      </button>
     </div>
 
     {/* Register */}
     <button
       type="submit"
       className="w-full bg-blue-500 hover:bg-blue-600
-                 text-white font-semibold py-3 rounded-xl
+                 text-white
+                  font-semibold py-3 rounded-xl
                  transition duration-200 active:scale-[0.98]
                  shadow-md hover:shadow-lg"
     >

@@ -8,6 +8,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
+  const [orders, setOrders] = useState([]);
   
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const Admin = () => {
     }).then((response) =>{
       setProducts(response.data.products);
       setUsers(response.data.users);
+      setOrders(response.data.orders);
     })
   }, [])
   
@@ -54,7 +56,7 @@ const Admin = () => {
     {/* Dashboard cards */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+      <div onClick={() => navigate("/admin/products")} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
         <p className="text-sm text-gray-500">
           Products
         </p>
@@ -64,13 +66,13 @@ const Admin = () => {
         </h2>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+      <div onClick={() => navigate("/admin/orders")} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
         <p className="text-sm text-gray-500">
           Orders
         </p>
 
         <h2 className="text-3xl font-bold text-gray-800 mt-2">
-          0
+          {orders.length}
         </h2>
       </div>
 

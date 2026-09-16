@@ -7,33 +7,37 @@ import { jwtDecode } from "jwt-decode";
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const[showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
       e.preventDefault();
       axios.post('http://localhost:5000/api/login', {
           email: email,
-          password: password
+          password: password, 
       }).then((response) => {
+        
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(jwtDecode(response.data.token)));
         localStorage.setItem('username', jwtDecode(response.data.token).username);
         localStorage.setItem('email', jwtDecode(response.data.token).email);
-        localStorage.setItem('phone', jwtDecode(response.data.token).phone || '');
-        localStorage.setItem('address', jwtDecode(response.data.token).address || '');
+        localStorage.setItem('role', jwtDecode(response.data.token).role);
         if (jwtDecode(response.data.token).role === 'admin') {
           navigate('/admin');
+          window.location.reload();
         } else {
-          navigate('/home');
+          navigate('/');
+          window.location.reload();
         }
       }).catch((error) => {
-        console.error(error)
+        console.error("Login error:", error.response?.data || error.message);
+        alert(error.response?.data?.message || "Нэвтрэхэд алдаа гарлаа");
       })
     };
   return (
    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-blue-100 px-4">
   <form
-    onSubmit={handleSubmit}
+      onSubmit={handleSubmit}
     className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 sm:p-10 flex flex-col gap-5"
   >
     {/* Title */}
@@ -64,19 +68,27 @@ const Login = () => {
     </div>
 
     {/* Password */}
-    <div className="flex flex-col gap-2">
-      <label className="text-sm font-semibold text-gray-700">
-        Password
-      </label>
+    <label className="text-sm font-semibold text-gray-700">
+      Password
+    </label>
 
+    <div className="relative">
       <input
-        type="password"
+        type={showPassword ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Нууц үг"
-        className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition
-                   focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 outline-none transition
+                  focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
       />
+
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+      >
+        {showPassword ? "🙈" : "👁️"}
+      </button>
     </div>
 
     {/* Login */}

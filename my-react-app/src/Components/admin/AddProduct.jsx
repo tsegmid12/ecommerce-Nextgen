@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const Edit = () => {
+const AddProduct = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
@@ -32,7 +32,7 @@ const Edit = () => {
       description: description,
       price: price,
       image: image,
-      category: category,
+      category: category.toLowerCase(),
       count: count,
       status: status,
       sold: sold
@@ -46,7 +46,6 @@ const Edit = () => {
   return (
     <div className="min-h-screen bg-[#f7f7f7] flex items-center justify-center px-4 py-10">
   <form
-    onSubmit={handleAdd}
     className="w-full max-w-2xl bg-white border border-gray-200 rounded-3xl shadow-xl p-8 sm:p-10"
   >
     <div className="text-center mb-8">
@@ -107,13 +106,19 @@ const Edit = () => {
         <label className="text-sm font-semibold text-gray-700">
           Category
         </label>
-        <input
-          type="text"
+
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category"
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-        />
+          className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white"
+        >
+          <option value="">Select category</option>
+          <option value="Mouse">Mouse</option>
+          <option value="Keyboard">Keyboard</option>
+          <option value="Headset">Headset</option>
+          <option value="Mousepad">Mousepad</option>
+          <option value="Accessories">Accessories</option>
+        </select>
       </div>
 
       {/* Image */}
@@ -128,6 +133,22 @@ const Edit = () => {
           placeholder="https://example.com/image.jpg"
           className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
+
+        {/* Image Preview */}
+        {image && (
+          <div className="mt-3 flex justify-center">
+            <div className="w-full max-w-xs overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+              <img
+                src={image}
+                alt="Product preview"
+                className="h-48 w-full object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Count */}
@@ -159,25 +180,33 @@ const Edit = () => {
           className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
       </div>
-
+    
       {/* Status */}
       <div className="flex flex-col gap-2 sm:col-span-2">
         <label className="text-sm font-semibold text-gray-700">
           Status
         </label>
-        <input
-          type="text"
+
+        <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          placeholder="Available"
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-        />
+          className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white"
+          required
+        >
+          <option value="">Select status</option>
+          <option value="available">Шинэ</option>
+          <option value="out_of_stock">Хэрэглэж байсан</option>
+          <option value="unavailable">Бараг шинэ</option>
+        </select>
       </div>
+
 
     </div>
 
+
     <button
       type="submit"
+      onClick={(e) => {handleAdd(e); navigate('/admin/products')}}
       className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl transition duration-200 active:scale-[0.98] shadow-md hover:shadow-lg"
     >
       Add Product
@@ -188,4 +217,4 @@ const Edit = () => {
   )
 }
 
-export default Edit
+export default AddProduct

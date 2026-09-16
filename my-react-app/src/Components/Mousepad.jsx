@@ -1,15 +1,34 @@
-import React from 'react'
-import ProductList from './ProductList.jsx'
-import Categore from './Categore.jsx'
+import React from "react";
+import ProductList from "./ProductList.jsx";
+import Categore from "./Categore.jsx";
 
 const Mousepad = () => {
   return (
-    <div className="min-h-screen bg-[#f7f7f7] pt-40">
-      <Categore />
-      <h1 className="text-3xl font-bold mt-10 ml-30">Mousepad</h1>
-      <ProductList defaultCategory="mousepad" showFilter={false} />
-    </div>
-  )
-}
+    <div className="min-h-screen bg-[#f7f7f7] pt-28 pb-20 sm:pt-32">
 
-export default Mousepad
+      {/* Categories */}
+        <Categore />
+
+      {/* Page Header */}
+      <div className="mx-auto mt-10 flex w-full max-w-7xl items-end justify-between px-4 sm:px-6 lg:px-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+            Mousepad
+          </h1>
+
+          <div className="mt-2 h-1 w-14 rounded-full bg-blue-500"></div>
+        </div>
+        
+      </div>
+
+      {/* Products */}
+      <ProductList
+        defaultCategory="mousepad"
+        showFilter={false}
+      />
+
+    </div>
+  );
+};
+
+export default Mousepad;

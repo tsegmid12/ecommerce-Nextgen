@@ -15,10 +15,12 @@ const AdminNavbar = () => {
     localStorage.removeItem("role");
 
     navigate("/login");
+    window.location.reload();
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-16 bg-gray-900 text-white shadow-lg z-50">
+
+      <nav className="fixed top-0 left-0 w-full h-16 bg-gray-900 text-white shadow-lg z-50">
       <div className="h-full flex items-center justify-between px-6">
 
         {/* Logo */}
@@ -78,6 +80,7 @@ const AdminNavbar = () => {
         </div>
       </div>
     </nav>
+    
   );
 };
 

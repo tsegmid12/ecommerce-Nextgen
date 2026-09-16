@@ -1,53 +1,175 @@
 import trash_can from '../../assets/trash-can.png'
-import heart from '../../assets/heart.png';
-import heart_full from '../../assets/heart-full.png';
-import { useState, React } from 'react'
+import heart from '../../assets/heart.png'
+import heart_full from '../../assets/heart-full.png'
+import { useState } from 'react'
+import axios from 'axios'
 
+const CartCards = ({ product, quantity, onDelete, updateQuantity }) => {
 
-    const CartList = ({product}) => {
+  const [count, setCount] = useState(quantity || 1)
+  const [wishlist, setWishlist] = useState(product.wishlist || false)
 
-    const [count, setCount] = useState(product.count > 0 ? 1 : 0);
-    const [wishlist, setWishlist] = useState(product.wishlist); 
+  const totalPrice = product.price * count
 
-    return (
-    <>
-      {product.cart && (<div className="flex items-center  border shadow border-gray-400 rounded-[15px] h-40 my-10 ml-20 w-250 bg-white">
-  
-          <div className='w-50 mt-2'> 
-              <img src={product.image} alt={product.name}className="h-40 justify-self-center"/>
-          </div>
-          <div className='ml-20 w-60'>
-              <h2 className="mt-3 -mb-2  text-lg font-bold">{product.name}</h2>
-              <span className="text-[10px] mr-4">{product.status}</span>
-              <span className="text-[10px]">Хүргэлт А бүсэд үнэгүй</span>
-              <p className="text-sm ml-8 mt-2  text-[10px]">үлдэгдэл {product.count - count}</p>
-              <div className="flex justify-between items-center mt-2 w-30 h-8 bg-[#eeeeee] rounded-4xl">
-                  {product.count === 0 ? (<p></p>) : <button onClick={() => setCount(count - 1)} disabled={count === 1} className='px-6 cursor-pointer hover:font-bold'>-</button>}
+  const handleDeleteFromCart = async () => {
+    try {
+      const token = localStorage.getItem("token")
 
-                  {product.count === 0 ? ( 
-                      <p className="flex text-red-500">Бараа дууссан</p>
-                  ) : (<span className="text-lx font-semibold self-center">{count}</span>)}
+      if (!token) {
+        alert("Та эхлээд нэвтэрнэ үү")
+        return
+      }
 
-                  {product.count === 0 ? (<p></p>) : <button onClick={() => setCount(count + 1)} disabled={count >= product.count} className='px-6 cursor-pointer hover:font-bold'>+</button>}
+      await axios.delete(
+        "http://localhost:5000/api/cart",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            productId: product._id,
+          },
+        }
+      )
 
-              </div>
-          </div>
-      
-          <div className='ml-80 '>
-              <p className="text-3xl font-bold ">{product.price}₮</p>
+      onDelete(product._id)
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (error) {
+      console.error("Error deleting from cart:", error)
+    }
+  }
 
-              <button onClick={() => setWishlist(!wishlist)} className='mt-2 mx-4'>
-                  {wishlist === false ? (<img src={heart} alt="heart" className="h-6"/>) : (<img src={heart_full} alt="heart" className="h-6"/>)}
-              </button>
-              <button className='mt-2'><img src={trash_can} alt="trash" className="h-6"/></button>
-          </div>
-          
+  const handleUpdateCart = async (newQuantity) => {
+    try {
+      const token = localStorage.getItem("token")
+
+      if (!token) {
+        alert("Та эхлээд нэвтэрнэ үү")
+        return
+      }
+
+      await axios.put(
+        "http://localhost:5000/api/cart",
+        {
+          productId: product._id,
+          quantity: newQuantity,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      setCount(newQuantity)
+      updateQuantity(product._id, newQuantity)
+      window.dispatchEvent(new Event("cartUpdated"));
+
+    } catch (error) {
+      console.error("Error updating cart:", error)
+    }
+  }
+
+  return (
+    <div className="flex w-full flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md sm:flex-row sm:items-center sm:p-5">
+
+      {/* IMAGE */}
+      <div className="flex h-36 w-full shrink-0 items-center justify-center sm:h-32 sm:w-36 hover:cursor-pointer transition-transform"
+       onClick={() => window.location.href = `/product/${product._id}`}>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="max-h-32 max-w-36 object-contain hover:scale-105"
+        />
       </div>
-    )}
 
-  </>
+      {/* PRODUCT INFO */}
+      <div className="min-w-0 flex-1">
 
+        <h2 className="truncate text-lg font-bold text-gray-800 sm:text-xl">
+          {product.name}
+        </h2>
+
+        <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+          <span className="text-xs text-gray-500">
+            {product.status}
+          </span>
+
+          <span className="text-xs text-green-600">
+            A бүсэд хүргэлт үнэгүй
+          </span>
+        </div>
+
+        <p className="mt-2 text-xs text-gray-400">
+          Үлдэгдэл: {product.count}
+        </p>
+
+        {/* QUANTITY */}
+        <div className="mt-3 flex h-9 w-32 items-center overflow-hidden rounded-full bg-gray-100">
+
+          <button
+            onClick={() => handleUpdateCart(count - 1)}
+            disabled={count === 1}
+            className="h-full w-10 cursor-pointer text-lg hover:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-300"
+          >
+            −
+          </button>
+
+          <span className="flex-1 text-center font-semibold">
+            {count}
+          </span>
+
+          <button
+            onClick={() => handleUpdateCart(count + 1)}
+            disabled={count >= product.count}
+            className="h-full w-10 cursor-pointer text-lg hover:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-300"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* PRICE + BUTTONS */}
+      <div className="flex w-full items-center justify-between sm:w-auto sm:flex-col sm:items-end sm:justify-between sm:self-stretch">
+
+        <p className="text-xl font-bold text-gray-800 sm:text-2xl">
+          {totalPrice.toLocaleString()}₮
+        </p>
+
+        <div className="flex items-center gap-2 sm:gap-3">
+
+          {/* WISHLIST */}
+          <button
+            onClick={() => setWishlist(!wishlist)}
+            className="cursor-pointer rounded-full p-2 transition hover:bg-gray-100"
+          >
+            <img
+              src={wishlist ? heart_full : heart}
+              alt="heart"
+              className="h-5 w-5 sm:h-6 sm:w-6"
+            />
+          </button>
+
+          {/* DELETE */}
+          <button
+            onClick={handleDeleteFromCart}
+            className="cursor-pointer rounded-full p-2 transition hover:bg-red-50"
+          >
+            <img
+              src={trash_can}
+              alt="trash"
+              className="h-5 w-5 sm:h-6 sm:w-6"
+            />
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
   )
 }
 
-export default CartList
+export default CartCards
