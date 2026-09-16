@@ -16,8 +16,9 @@ const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: "https://nextgenstr.netlify.app/cart"
+}));app.use(express.json());
 
 // MongoDB
 mongoose.connect(MONGO_URI).then(() => {

@@ -268,7 +268,7 @@ const ProductCard = ({ product, onRemove }) => {
           <button
             type="button"
             onClick={handleAddToCart}
-            disabled={count >= product.count}
+            disabled={count > product.count}
             className="cursor-pointer rounded-xl border active:scale-90 border-gray-300 bg-white py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 hover:shadow-sm"
           >
             Сагслах
