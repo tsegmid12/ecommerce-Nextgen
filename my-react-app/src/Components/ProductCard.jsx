@@ -70,7 +70,7 @@ const ProductCard = ({ product, onRemove }) => {
         alert("Энэ бүтээгдэхүүн дууссан байна");
         return;
       }
-        await axios.post("http://localhost:5000/api/cart",
+        await axios.post(`${API_URL}/api/cart`,
         {
           userId: localStorage.getItem("userId"),
           productId: product._id,
@@ -118,7 +118,7 @@ const ProductCard = ({ product, onRemove }) => {
       }
 
       await axios.post(
-        "http://localhost:5000/api/wishlist",
+        `${API_URL}/api/wishlist`,
         {
           productId: product._id,
         },
@@ -165,7 +165,7 @@ const ProductCard = ({ product, onRemove }) => {
       }
 
       await axios.delete(
-        "http://localhost:5000/api/wishlist",
+        `${API_URL}/api/wishlist`,
         {
           data: {
             productId: product._id,
