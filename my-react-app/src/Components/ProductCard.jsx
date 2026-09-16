@@ -53,32 +53,6 @@ const ProductCard = ({ product, onRemove }) => {
     checkWishlist();
   }, [product._id]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setCount(0);
-      return;
-    }
-
-    const fetchCartQuantity = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setCount(response.data?.length || 0);
-      } catch (error) {
-        console.error(
-          "Error fetching cart quantity:",
-          error.response?.data || error.message
-        );
-      }
-    };
-
-    fetchCartQuantity();
-  }, [token]);
-
   // =========================
   // ADD TO CART
   // =========================
