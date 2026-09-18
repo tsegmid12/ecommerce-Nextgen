@@ -34,6 +34,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["user", "admin"],
         default: "user"
+    },
+    verificationCode: {
+        type: String,
+        default: null
+    },
+    verificationCodeExpires: {
+        type: Date,
+        default: null
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
 });
 

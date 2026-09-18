@@ -7,6 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Admin from "./AdminNavbar";
 
+import homeIcon from "../../assets/userhome.png";
+import shopIcon from "../../assets/shop.png";
+import wishlistIcon from "../../assets/wihslist.png";
+import cartIconMobile from "../../assets/shopping-cart1.png";
+import accountIcon from "../../assets/useraccount.png";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Navbar = () => {
@@ -275,14 +281,14 @@ const Navbar = () => {
 
         <div className="border-t border-gray-100 pb-3 pt-2 lg:hidden">
           <nav className="overflow-x-auto">
-            <ul className="flex min-w-max items-center justify-center gap-2 text-xs font-semibold text-gray-600 sm:gap-4 sm:text-sm">
-
+            <ul className="flex min-w-max items-center justify-center gap-6 text-xs font-semibold text-gray-600 sm:gap-4 sm:text-sm">
+ 
               <li>
                 <Link
                   to="/home"
                   className="block rounded-xl px-3 py-2 transition hover:bg-blue-50 hover:text-blue-600"
                 >
-                  Нүүр
+                  <img src={homeIcon} alt="Home" className="mx-auto h-4 w-4 sm:h-5 sm:w-5 active:scale-90 hover:" />
                 </Link>
               </li>
 
@@ -291,7 +297,7 @@ const Navbar = () => {
                   to="/shop"
                   className="block rounded-xl px-3 py-2 transition hover:bg-blue-50 hover:text-blue-600"
                 >
-                  Дэлгүүр
+                  <img src={shopIcon} alt="Shop" className="mx-auto h-4 w-4 sm:h-5 sm:w-5 active:scale-90"/>
                 </Link>
               </li>
 
@@ -300,7 +306,7 @@ const Navbar = () => {
                   to="/wishlist"
                   className="block rounded-xl px-3 py-2 transition hover:bg-blue-50 hover:text-blue-600"
                 >
-                  Wishlist
+                  <img src={wishlistIcon} alt="Wishlist" className="mx-auto h-4 w-4 sm:h-5 sm:w-5 active:scale-90" />
                 </Link>
               </li>
 
@@ -309,7 +315,7 @@ const Navbar = () => {
                   to="/cart"
                   className="block rounded-xl px-3 py-2 transition hover:bg-blue-50 hover:text-blue-600"
                 >
-                  Сагс
+                  <img src={cartIconMobile} alt="Cart" className="mx-auto h-4 w-4 sm:h-5 sm:w-5 active:scale-90" />
                 </Link>
               </li>
 
@@ -318,7 +324,7 @@ const Navbar = () => {
                   to="/myAccount"
                   className="block rounded-xl px-3 py-2 transition hover:bg-blue-50 hover:text-blue-600"
                 >
-                  Миний мэдээлэл
+                  <img src={accountIcon} alt="Account" className="mx-auto h-4 w-4 sm:h-5 sm:w-5 active:scale-90" />
                 </Link>
               </li>
 

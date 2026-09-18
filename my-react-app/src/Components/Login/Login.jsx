@@ -3,9 +3,10 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { jwtDecode } from "jwt-decode";
+import eye from '../../assets/eye.png'
+import eyeCrossed from '../../assets/eye-crossed.png'
 
 const API_URL = import.meta.env.VITE_API_URL;
-
 
 const Login = () => {
   
@@ -39,7 +40,7 @@ const Login = () => {
       })
     };
   return (
-   <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-blue-100 px-4">
+   <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-blue-100 px-4 py-40">
   <form
       onSubmit={handleSubmit}
     className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 sm:p-10 flex flex-col gap-5"
@@ -58,7 +59,7 @@ const Login = () => {
     {/* Email */}
     <div className="flex flex-col gap-2">
       <label className="text-sm font-semibold text-gray-700">
-        Email
+        И-майл
       </label>
 
       <input
@@ -73,7 +74,7 @@ const Login = () => {
 
     {/* Password */}
     <label className="text-sm font-semibold text-gray-700">
-      Password
+      Нууц үг
     </label>
 
     <div className="relative">
@@ -91,7 +92,7 @@ const Login = () => {
         onClick={() => setShowPassword(!showPassword)}
         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
       >
-        {showPassword ? "🙈" : "👁️"}
+        {showPassword ? <img src={eyeCrossed} alt="Hide password" className='h-4 fill-current' /> : <img src={eye} alt="Show password" className='h-4' />}
       </button>
     </div>
 

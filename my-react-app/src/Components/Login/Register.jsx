@@ -3,6 +3,8 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from "jwt-decode";
+import eye from '../../assets/eye.png'
+import eyeCrossed from '../../assets/eye-crossed.png'
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,11 +15,17 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);  
+    const [checkShowPassword, setCheckShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (password !== checkPassword) {
+            alert("Нууц үг таарахгүй байна");
+            return;
+        }
 
         axios.post(`${API_URL}/api/register`, {
              email,
@@ -30,7 +38,7 @@ const Register = () => {
             localStorage.setItem('username', jwtDecode(response.data.token).username);
             localStorage.setItem('email', jwtDecode(response.data.token).email);
             localStorage.setItem('role', jwtDecode(response.data.token).role);
-            navigate('/home');
+            navigate('/verify-email', { state: { userId: response.data.user.id } });
             window.location.reload();
         }).catch((error) => {
             console.error("Register error:", error.response?.data || error.message);
@@ -38,7 +46,7 @@ const Register = () => {
         });
     }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f7f7f7] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#f7f7f7] px-4 p-40">
   <form
     onSubmit={handleSubmit}
     className="w-full max-w-md bg-white border border-gray-200
@@ -59,7 +67,7 @@ const Register = () => {
     {/* Email */}
     <div className="flex flex-col gap-2">
       <label className="text-sm font-semibold text-gray-700">
-        Email
+        И-майл
       </label>
 
       <input
@@ -78,7 +86,7 @@ const Register = () => {
     {/* Username */}
     <div className="flex flex-col gap-2">
       <label className="text-sm font-semibold text-gray-700">
-        Username
+        Хэрэглэгчийн нэр
       </label>
 
       <input
@@ -95,6 +103,9 @@ const Register = () => {
     </div>
 
     {/* Password */}
+    <label className="text-sm font-semibold text-gray-700">
+        Нууц үг
+    </label>
     <div className="relative">
       <input
         type={showPassword ? "text" : "password"}
@@ -110,13 +121,13 @@ const Register = () => {
         onClick={() => setShowPassword(!showPassword)}
         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
       >
-        {showPassword ? "🙈" : "👁️"}
+        {showPassword ? <img src={eyeCrossed} alt="Hide password" className='h-4 fill-current' /> : <img src={eye} alt="Show password" className='h-4' />}
       </button>
     </div>
 
     <div className="relative">
       <input
-        type={showPassword ? "text" : "password"}
+        type={checkShowPassword ? "text" : "password"}
         value={checkPassword}
         onChange={(e) => setCheckPassword(e.target.value)}
         placeholder="Нууц үг"
@@ -126,10 +137,10 @@ const Register = () => {
 
       <button
         type="button"
-        onClick={() => setShowPassword(!showPassword)}
+        onClick={() => setCheckShowPassword(!checkShowPassword)}
         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
       >
-        {showPassword ? "🙈" : "👁️"}
+        {checkShowPassword ? <img src={eyeCrossed} alt="Hide password" className='h-4 fill-current' /> : <img src={eye} alt="Show password" className='h-4' />}
       </button>
     </div>
 

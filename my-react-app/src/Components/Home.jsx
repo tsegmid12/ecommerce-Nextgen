@@ -39,9 +39,8 @@ const Home = () => {
                 alt={`Banner ${index + 1}`}
                 className="
                   block
-                  h-40
+                  h-full
                   w-full
-                  shrink-0
                   object-cover
 
                   sm:h-56

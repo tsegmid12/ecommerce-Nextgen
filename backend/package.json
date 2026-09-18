@@ -17,6 +17,7 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "jsonwebtoken": "^9.0.3",
-    "localstorage": "^1.0.1"
+    "localstorage": "^1.0.1",
+    "nodemailer": "^10.0.10"
   }
 }

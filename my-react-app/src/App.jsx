@@ -24,6 +24,7 @@ import Order from "./Components/Order";
 import AdminProducts from "./Components/admin/AdminProducts";
 import AdminOrder from "./Components/admin/Order";
 import OrderDetail from "./Components/admin/OrderDetail";
+import VerifyEmail from "./Components/Login/VerifyEmail";
 import {useEffect} from "react";
 import {jwtDecode} from "jwt-decode";
 
@@ -81,6 +82,7 @@ const App = () => {
         <Route path="/admin/products" element={<AdminRoute><AdminProducts/></AdminRoute>} />
         <Route path="/admin/orders" element={<AdminRoute><AdminOrder/></AdminRoute>} />
         <Route path="/admin/orders/:id" element={<AdminRoute><OrderDetail/></AdminRoute>} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
 
         <Route path="/shop/mouse" element={<Mouse />} />
         <Route path="/shop/keyboard" element={<Keyboard />} />

@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const User = require("./models/User");
 const Product = require("./models/Products");
@@ -17,7 +18,7 @@ const MONGO_URI = process.env.MONGO_URI
 
 const app = express();
 app.use(cors({
-  origin: "https://nextgenstr.netlify.app"
+  origin: ["https://nextgenstr.netlify.app", "http://localhost:5173",]
 }));app.use(express.json());
 
 // MongoDB
@@ -27,6 +28,14 @@ mongoose.connect(MONGO_URI).then(() => {
   .catch((error) => {
     console.error("MongoDB connection error:", error);
   });
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    }
+})
 
 const verifyToken = (req, res, next) => {
   try {
@@ -117,12 +126,25 @@ app.post("/api/register", async (req, res) => {
       return res.status(400).json({ message: "Email аль хэдийн бүртгэгдсэн байна" });
     }
 
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
     const user = await User.create({
       email,
       username,
       password: hashedPassword,
+      verificationCode: code,
+      verificationCodeExpires: Date.now() + 5 * 60 * 1000,
+      isVerified: false,
       role: role || 'user'
     });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: "NextGen - Бүртгэл баталгаажуулах код",
+      text: `Таны бүртгэл баталгаажуулах код: ${code}. Энэ код 5 минутын хугацаанд хүчинтэй.`
+    });
+
 
     const userData = {
       id: user._id,
@@ -133,9 +155,9 @@ app.post("/api/register", async (req, res) => {
 
     const token = jwt.sign(userData, JWT_SECRET, { expiresIn: "2h" });
 
-    res.status(201).json({message: "Амжилттай бүртгэлээ", token , user });
+    res.status(201).json({message: "Амжилттай бүртгэлээ. Бүртгэл баталгаажуулах код таны и-мэйлд илгээгдлээ.", token , user: userData });
   } catch (error) {
-    console.error(error);
+    console.error('error:', error);
 
     res.status(500).json({
       message: "Error registering user",
@@ -617,6 +639,61 @@ app.put("/api/admin/orders/:id", verifyToken, verifyAdmin, async (req, res) => {
   catch (error) {
     console.error(error);
     res.status(500).json({ message: "Захиалга шинэчлэхэд алдаа гарлаа" });
+  }
+});
+
+app.post("/api/verify-email", async (req, res) => {
+  try {
+    const { userId, code } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Хэрэглэгч олдсонгүй",
+      });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({
+        message: "Email аль хэдийн баталгаажсан байна",
+      });
+    }
+
+    if (!user.verificationCode) {
+      return res.status(400).json({
+        message: "Баталгаажуулах код байхгүй байна",
+      });
+    }
+
+    if (new Date() > user.verificationCodeExpires) {
+      return res.status(400).json({
+        message: "Кодын хугацаа дууссан байна",
+      });
+    }
+
+    if (user.verificationCode !== code) {
+      return res.status(400).json({
+        message: "Баталгаажуулах код буруу байна",
+      });
+    }
+
+    user.isVerified = true;
+    user.verificationCode = null;
+    user.verificationCodeExpires = null;
+
+    await user.save();
+
+    res.json({
+      message: "Email амжилттай баталгаажлаа",
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Email баталгаажуулахад алдаа гарлаа",
+    });
   }
 });
 
