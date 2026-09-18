@@ -29,7 +29,7 @@ const Admin = () => {
   }, [])
   
   return (
-    <div className="min-h-screen bg-[#f7f7f7] px-4 py-50">
+    <div className="min-h-screen bg-[#f7f7f7] px-4 py-20">
   <div className="max-w-6xl mx-auto">
 
     {/* Header */}

@@ -88,7 +88,7 @@ const AdminProducts = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-60">
+    <div className="min-h-screen bg-gray-100 py-20">
       {/* ================= HEADER ================= */}
       <div className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
@@ -398,7 +398,7 @@ const AdminProducts = () => {
 
             {products.map((product) => {
 
-              const stock = Number(product.stock) || 0;
+              const stock = Number(product.count) || 0;
 
               return (
                 <div
@@ -486,6 +486,7 @@ const AdminProducts = () => {
 
                     <button
                       type="button"
+                       onClick={() => navigate(`/admin/products/edit/${product._id}`)}
                       className="flex-1 rounded-lg border border-gray-200 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
                     >
                       Edit
