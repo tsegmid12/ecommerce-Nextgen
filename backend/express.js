@@ -18,7 +18,7 @@ const MONGO_URI = process.env.MONGO_URI
 
 const app = express();
 app.use(cors({
-  origin: ["https://nextgenstr.netlify.app", "http://localhost:5173",]
+  origin: ["https://nextgenstr.netlify.app", "http://localhost:5173", "https://nextgenstore.tsegmide20.workers.dev"]
 }));app.use(express.json());
 
 // MongoDB
