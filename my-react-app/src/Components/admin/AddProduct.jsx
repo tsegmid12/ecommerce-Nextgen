@@ -47,7 +47,7 @@ const AddProduct = () => {
     })
   }
   return (
-    <div className="min-h-screen bg-[#f7f7f7] flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-[#f7f7f7] flex items-center justify-center px-4 py-20">
   <form
     className="w-full max-w-2xl bg-white border border-gray-200 rounded-3xl shadow-xl p-8 sm:p-10"
   >

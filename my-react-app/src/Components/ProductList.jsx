@@ -114,7 +114,7 @@ const ProductList = ({ defaultCategory = "all", showFilter = true }) => {
       </div>
 
       {/* PRODUCTS */}
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 justify-items-center gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8 xl:grid-cols-4">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-2 justify-items-center gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8 xl:grid-cols-4">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (
             <ProductCard
