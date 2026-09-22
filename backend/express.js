@@ -3,7 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {Resent} = require("resent");
+const {Resend} = require("resend");
 const User = require("./models/User");
 const Product = require("./models/Products");
 const Cart = require("./models/Cart");
@@ -14,7 +14,7 @@ require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET 
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
-const resend = new Resent({ process.env.RESEND_API_KEY });
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 app.use(cors({
@@ -31,8 +31,6 @@ mongoose.connect(MONGO_URI).then(() => {
   .catch((error) => {
     console.error("MongoDB connection error:", error);
   });
-
-
 
 const verifyToken = (req, res, next) => {
   try {
@@ -136,7 +134,7 @@ app.post("/api/register", async (req, res) => {
     });
 
     await resend.emails.send({
-      from: "NextGen <onboarding@resend.dev>",
+      from: "NextGen <noreply@nextgen-str.shop>",
       to: email,
       subject: "NextGen - Бүртгэл баталгаажуулах код",
       text: `Таны бүртгэл баталгаажуулах код: ${code}. Энэ код 1 минутын хугацаанд хүчинтэй.`
