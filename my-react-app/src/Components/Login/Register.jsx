@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 import eye from "../../assets/eye.png";
+
 import eyeCrossed from "../../assets/eye-crossed.png";
 
 const API_URL = import.meta.env.VITE_API_URL;
