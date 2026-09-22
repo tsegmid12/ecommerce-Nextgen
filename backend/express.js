@@ -34,6 +34,9 @@ mongoose.connect(MONGO_URI).then(() => {
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASSWORD
@@ -136,7 +139,7 @@ app.post("/api/register", async (req, res) => {
       username,
       password: hashedPassword,
       verificationCode: code,
-      verificationCodeExpires: Date.now() + 5 * 60 * 1000,
+      verificationCodeExpires: Date.now() + 1 * 60 * 1000,
       isVerified: false,
       role: role || 'user'
     });
